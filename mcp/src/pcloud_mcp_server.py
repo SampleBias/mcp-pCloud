@@ -6,15 +6,30 @@ import tempfile
 import base64
 from typing import Dict, List, Optional, Any, Union
 
+# Import configuration
+try:
+    from config import *
+except ImportError:
+    # Default configuration if config.py is missing
+    PCLOUD_API_URL = "https://api.pcloud.com"
+    PCLOUD_ACCESS_TOKEN = os.environ.get("PCLOUD_ACCESS_TOKEN", "")
+    SERVER_NAME = "pCloud MCP Server"
+    DEBUG_MODE = False
+    CACHE_ENABLED = False
+    ROOT_FOLDER_ID = 0
+    DEFAULT_UPLOAD_FOLDER_ID = 0
+
 # Instantiate an MCP server client
-mcp = FastMCP("pCloud MCP Server")
+mcp = FastMCP(SERVER_NAME)
 
-# pCloud API base URL
-PCLOUD_API_URL = "https://api.pcloud.com"
+# Use the access token from config
+ACCESS_TOKEN = PCLOUD_ACCESS_TOKEN
 
-# Make sure to get your access token from pCloud OAuth
-# and set it as an environment variable or provide it directly
-ACCESS_TOKEN = os.environ.get("PCLOUD_ACCESS_TOKEN", "")
+# Debug information
+if DEBUG_MODE:
+    print(f"Starting {SERVER_NAME}")
+    print(f"API URL: {PCLOUD_API_URL}")
+    print(f"Access token set: {'Yes' if ACCESS_TOKEN else 'No'}")
 
 def api_request(endpoint: str, params: Dict = None, method: str = "GET", files: Dict = None):
     """Make an API request to pCloud"""

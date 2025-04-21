@@ -13,9 +13,9 @@ import urllib.parse
 import json
 
 # pCloud OAuth configuration
-# Replace these with your own app's credentials from pCloud Console
-CLIENT_ID = "YOUR_CLIENT_ID"
-CLIENT_SECRET = "YOUR_CLIENT_SECRET"
+# You can set these directly here or enter them when prompted
+CLIENT_ID = os.environ.get("PCLOUD_CLIENT_ID", "")
+CLIENT_SECRET = os.environ.get("PCLOUD_CLIENT_SECRET", "")
 REDIRECT_URI = "http://localhost:8000/oauth/callback"
 PCLOUD_AUTH_URL = "https://my.pcloud.com/oauth2/authorize"
 PCLOUD_TOKEN_URL = "https://api.pcloud.com/oauth2_token"
@@ -127,9 +127,18 @@ class OAuthCallbackHandler(BaseHTTPRequestHandler):
         self.server.oauth_complete = True
 
 def main():
+    global CLIENT_ID, CLIENT_SECRET
+    
+    # Prompt for CLIENT_ID and CLIENT_SECRET if not set
+    if not CLIENT_ID:
+        CLIENT_ID = input("Enter your pCloud Client ID: ")
+    
+    if not CLIENT_SECRET:
+        CLIENT_SECRET = input("Enter your pCloud Client Secret: ")
+    
     # Check if client ID and secret are set
-    if CLIENT_ID == "YOUR_CLIENT_ID" or CLIENT_SECRET == "YOUR_CLIENT_SECRET":
-        print("Please set your CLIENT_ID and CLIENT_SECRET in the script.")
+    if not CLIENT_ID or not CLIENT_SECRET:
+        print("ERROR: CLIENT_ID and CLIENT_SECRET are required.")
         print("You can get these from the pCloud Console after registering your app.")
         return
     
