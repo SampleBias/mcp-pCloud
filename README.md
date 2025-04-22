@@ -40,13 +40,42 @@ cd mcp-pCloud
 
 Once your MCP server is running, you can connect it to any MCP-compatible AI system:
 
-1. In your AI application, look for MCP integration settings
-2. Connect to your local MCP server (usually running on http://localhost:8000)
-3. Ask the AI to interact with your pCloud storage:
+### Claude Desktop Configuration
+
+To connect your pCloud MCP server to Claude Desktop:
+
+1. Make sure your MCP server is running:
+   ```bash
+   cd mcp/src
+   python -m mcp dev pcloud_mcp_server.py
+   ```
+
+2. Open Claude Desktop and go to Settings > Model Context Protocol
+
+3. Click "Add New Connection" and enter:
+   - **Name**: pCloud Storage
+   - **Transport Type**: HTTP
+   - **URL**: http://localhost:8000
+   - **Description** (optional): Access to my pCloud files and folders
+   - **Icon** (optional): 📁 or 🗂️
+
+4. Save and enable the connection
+
+5. In your conversations with Claude, you can now ask to:
    - "Show me files in my pCloud account"
    - "Upload this document to my pCloud"
    - "Find all images in my pCloud storage"
    - "Share this file with my team"
+
+### Cursor IDE Configuration
+
+For Cursor IDE:
+
+1. Start your MCP server as above
+2. Open Cursor IDE
+3. Access the MCP configuration in settings
+4. Add a new connection to http://localhost:8000
+5. Use Cursor's AI features to interact with your pCloud files directly
 
 ## Documentation
 

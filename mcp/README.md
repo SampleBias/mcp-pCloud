@@ -50,10 +50,20 @@ Or on Windows:
 set PCLOUD_ACCESS_TOKEN=your_access_token_here
 ```
 
+Alternatively, you can edit the `src/config.py` file to set your token directly:
+```python
+PCLOUD_ACCESS_TOKEN = "your_access_token_here"
+```
+
 ### Getting a pCloud Access Token
 
 1. Register your application on the [pCloud Console](https://docs.pcloud.com/oauth/index.html)
-2. Implement the OAuth flow to get an access token as described in the [pCloud documentation](https://docs.pcloud.com/oauth/index.html)
+2. Run the helper script:
+   ```bash
+   cd src
+   python get_pcloud_token.py
+   ```
+3. Follow the prompts to enter your CLIENT_ID and CLIENT_SECRET, then authorize in your browser
 
 ## Usage
 
@@ -73,6 +83,33 @@ This MCP server can be used with any AI system that supports the Model Context P
 - Cursor IDE
 - Claude Desktop
 - Custom applications built with the MCP client
+
+### Claude Desktop Configuration
+
+To connect this MCP server to Claude Desktop:
+
+1. Make sure your server is running: 
+   ```bash
+   cd mcp/src
+   python -m mcp dev pcloud_mcp_server.py
+   ```
+
+2. Launch Claude Desktop and go to Settings > Model Context Protocol
+
+3. Add a new MCP connection with the following details:
+   - **Name**: pCloud Storage
+   - **Transport**: HTTP
+   - **URL**: http://localhost:8000
+   - **Description** (optional): Access files in my pCloud storage
+   - **Icon** (optional): 📁 or 🗂️
+
+4. Save your configuration and enable the connection
+
+5. You can now ask Claude to interact with your pCloud storage, for example:
+   - "Show me my pCloud files"
+   - "Upload this document to my pCloud"
+   - "Find all images in my pCloud storage"
+   - "Share a specific file from my pCloud"
 
 ### Example Flow
 
